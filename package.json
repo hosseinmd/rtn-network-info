@@ -1,0 +1,45 @@
+{
+  "name": "rtn-network-info",
+  "version": "0.0.2",
+  "description": "React Native Network info",
+  "react-native": "js/index",
+  "source": "js/index",
+  "files": [
+    "js",
+    "android",
+    "ios",
+    "rtn-network-info.podspec",
+    "!android/build",
+    "!ios/build",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__"
+  ],
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/hosseinmd/rtn-network-info",
+  "author": "<Your Name> <your_email@your_provider.com> (https://github.com/hosseinmd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hosseinmd/rtn-network-info/issues"
+  },
+  "homepage": "https://github.com/hosseinmd/rtn-network-info#readme",
+  "devDependencies": {
+    "@types/react-native": "^0.70.6"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "codegenConfig": {
+    "name": "RTNNetworkInfoSpec",
+    "type": "modules",
+    "jsSrcsDir": "js",
+    "android": {
+      "javaPackageName": "com.rtnnetworkinfo"
+    }
+  }
+}
