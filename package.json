@@ -2,10 +2,15 @@
   "name": "rtn-network-info",
   "version": "0.0.2",
   "description": "React Native Network info",
-  "react-native": "js/index",
+  "react-native": "lib/index.js",
   "source": "js/index",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "prepare": "tsc"
+  },
   "files": [
     "js",
+    "lib",
     "android",
     "ios",
     "rtn-network-info.podspec",
@@ -21,14 +26,15 @@
     "android"
   ],
   "repository": "https://github.com/hosseinmd/rtn-network-info",
-  "author": "<Your Name> <your_email@your_provider.com> (https://github.com/hosseinmd)",
+  "author": "Hossein Mohammadi hosseinm.developer@gmail.com (https://github.com/hosseinmd)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hosseinmd/rtn-network-info/issues"
   },
   "homepage": "https://github.com/hosseinmd/rtn-network-info#readme",
   "devDependencies": {
-    "@types/react-native": "^0.70.6"
+    "@types/react-native": "^0.70.6",
+    "typescript": "^4.9.3"
   },
   "peerDependencies": {
     "react": "*",

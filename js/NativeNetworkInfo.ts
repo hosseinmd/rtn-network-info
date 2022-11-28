@@ -1,4 +1,4 @@
-import type { TurboModule } from "react-native/Libraries/TurboModule/RCTExport";
+import type { TurboModule } from "react-native";
 import { TurboModuleRegistry } from "react-native";
 
 export interface Spec extends TurboModule {
@@ -7,6 +7,7 @@ export interface Spec extends TurboModule {
   getBroadcast(): Promise<string>;
   getIPAddress(): Promise<string>;
   getIPV4Address(): Promise<string>;
+  getWIFIIPV4Address(): Promise<string>;
   getSubnet(): Promise<string>;
   getGatewayIPAddress(): Promise<string>;
   getFrequency(): Promise<number>;
