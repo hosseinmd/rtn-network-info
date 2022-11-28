@@ -35,7 +35,7 @@ $ `cd ios && pod install && cd ..`
 ## Usage
 
 ```javascript
-import { NetworkInfo } from "react-native-network-info";
+import NetworkInfo from "react-native-network-info";
 
 // Get Local IP
 NetworkInfo.getIPAddress().then((ipAddress) => {
