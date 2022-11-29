@@ -17,6 +17,38 @@
 namespace facebook {
   namespace react {
     
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncSSID(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncSSID", @selector(getSyncSSID), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncBSSID(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncBSSID", @selector(getSyncBSSID), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncBroadcast(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncBroadcast", @selector(getSyncBroadcast), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncIPAddress(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncIPAddress", @selector(getSyncIPAddress), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncIPV4Address(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncIPV4Address", @selector(getSyncIPV4Address), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncWIFIIPV4Address(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncWIFIIPV4Address", @selector(getSyncWIFIIPV4Address), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncSubnet(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncSubnet", @selector(getSyncSubnet), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncGatewayIPAddress(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncGatewayIPAddress", @selector(getSyncGatewayIPAddress), args, count);
+    }
+
     static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSSID(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
       return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getSSID", @selector(getSSID:reject:), args, count);
     }
@@ -37,6 +69,10 @@ namespace facebook {
       return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getIPV4Address", @selector(getIPV4Address:reject:), args, count);
     }
 
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getWIFIIPV4Address(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getWIFIIPV4Address", @selector(getWIFIIPV4Address:reject:), args, count);
+    }
+
     static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSubnet(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
       return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getSubnet", @selector(getSubnet:reject:), args, count);
     }
@@ -52,6 +88,30 @@ namespace facebook {
     NativeNetworkInfoSpecJSI::NativeNetworkInfoSpecJSI(const ObjCTurboModule::InitParams &params)
       : ObjCTurboModule(params) {
         
+        methodMap_["getSyncSSID"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncSSID};
+        
+        
+        methodMap_["getSyncBSSID"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncBSSID};
+        
+        
+        methodMap_["getSyncBroadcast"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncBroadcast};
+        
+        
+        methodMap_["getSyncIPAddress"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncIPAddress};
+        
+        
+        methodMap_["getSyncIPV4Address"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncIPV4Address};
+        
+        
+        methodMap_["getSyncWIFIIPV4Address"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncWIFIIPV4Address};
+        
+        
+        methodMap_["getSyncSubnet"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncSubnet};
+        
+        
+        methodMap_["getSyncGatewayIPAddress"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncGatewayIPAddress};
+        
+        
         methodMap_["getSSID"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSSID};
         
         
@@ -65,6 +125,9 @@ namespace facebook {
         
         
         methodMap_["getIPV4Address"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getIPV4Address};
+        
+        
+        methodMap_["getWIFIIPV4Address"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getWIFIIPV4Address};
         
         
         methodMap_["getSubnet"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSubnet};

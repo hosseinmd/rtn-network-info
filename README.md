@@ -30,50 +30,98 @@ Nothing to do
 
 #### `iOS` also requires CocoaPods install
 
-$ `cd ios && pod install && cd ..`
+`$ cd ios && pod install && cd ..`
 
 ## Usage
 
-```javascript
-import NetworkInfo from "react-native-network-info";
+### Get Local IP
 
-// Get Local IP
+```javascript
+import NetworkInfo from "rtn-network-info";
+
+// Async
 NetworkInfo.getIPAddress().then((ipAddress) => {
   console.log(ipAddress);
 });
+// Sync
+const ipAddress = NetworkInfo.getSyncIPAddress();
+```
 
-// Get IPv4 IP (priority: WiFi first, cellular second)
+### Get IPv4 IP
+
+(priority: WiFi first, cellular second)
+
+```js
+// Async
 NetworkInfo.getIPV4Address().then((ipv4Address) => {
   console.log(ipv4Address);
 });
+// Sync
+const ipv4Address = NetworkInfo.getSyncIPV4Address();
+```
 
-// Get Broadcast
+### Get Broadcast
+
+```js
+// Async
 NetworkInfo.getBroadcast().then((broadcast) => {
   console.log(broadcast);
 });
+// Sync
+const broadcast = NetworkInfo.getSyncBroadcast();
+```
 
-// Get SSID
+### Get SSID
+
+```js
+// Async
 NetworkInfo.getSSID().then((ssid) => {
   console.log(ssid);
 });
+// Sync
+const ssid = NetworkInfo.getSyncSSID();
+```
 
-// Get BSSID
+### Get BSSID
+
+```js
+// Async
 NetworkInfo.getBSSID().then((bssid) => {
   console.log(bssid);
 });
+// Sync
+const bssid = NetworkInfo.getSyncBSSID();
+```
 
-// Get Subnet
+### Get Subnet
+
+```js
+// Async
 NetworkInfo.getSubnet().then((subnet) => {
   console.log(subnet);
 });
+// Sync
+const subnet = NetworkInfo.getSyncSubnet();
+```
 
-// Get Default Gateway IP
+### Get Default Gateway IP
+
+```js
+// Async
 NetworkInfo.getGatewayIPAddress().then((defaultGateway) => {
   console.log(defaultGateway);
 });
+// Sync
+const defaultGateway = NetworkInfo.getSyncGatewayIPAddress();
+```
 
-// Get frequency (supported only for Android)
+### Get frequency (supported only for Android)
+
+```js
+// Async
 NetworkInfo.getFrequency().then((frequency) => {
   console.log(frequency);
 });
+// Sync
+const frequency = NetworkInfo.getSyncFrequency();
 ```

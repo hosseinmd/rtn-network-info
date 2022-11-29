@@ -30,34 +30,42 @@
 RCT_EXPORT_MODULE();
 
 #if TARGET_OS_IOS
-RCT_EXPORT_METHOD(getSSID:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (NSString*) getSyncSSID
 {
     @try{
         NSString *SSID = [FGRoute getSSID];
-        resolve(SSID);
+        return SSID;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
+}
+
+- (void) getSSID:(RCTPromiseResolveBlock)resolve
+        rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncSSID]);
 }
 #endif
 
 #if TARGET_OS_IOS
-RCT_EXPORT_METHOD(getBSSID:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (NSString*) getSyncBSSID
 {
     @try{
         NSString *BSSID = [FGRoute getBSSID];
-        resolve(BSSID);
+        return BSSID;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
+}
+
+- (void) getBSSID:(RCTPromiseResolveBlock)resolve
+         rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncBSSID]);
 }
 #endif
 
-RCT_EXPORT_METHOD(getBroadcast:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
-
+- (NSString*) getSyncBroadcast
 {
     @try{
         NSString *address = @"";
@@ -91,36 +99,51 @@ RCT_EXPORT_METHOD(getBroadcast:(RCTPromiseResolveBlock)resolve
             }
         }
         freeifaddrs(interfaces);
-        resolve(address);
+        return address;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
 }
 
-RCT_EXPORT_METHOD(getIPAddress:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (void) getBroadcast:(RCTPromiseResolveBlock)resolve
+             rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncBroadcast]);
+}
+
+- (NSString*) getSyncIPAddress
 {
     @try {
         NSString *address = [FGRoute getIPAddress];
-        resolve(address);
+        return address;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
 }
 
-RCT_EXPORT_METHOD(getGatewayIPAddress:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (void) getIPAddress:(RCTPromiseResolveBlock)resolve
+             rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncIPAddress]);
+}
+
+- (NSString*) getSyncGatewayIPAddress
 {
     @try{
         NSString *ipString = [FGRoute getGatewayIP];
-        resolve(ipString);
+        return ipString;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
 }
 
-RCT_EXPORT_METHOD(getIPV4Address:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (void) getGatewayIPAddress:(RCTPromiseResolveBlock)resolve
+                    rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncGatewayIPAddress]);
+}
+
+- (NSString*) getSyncIPV4Address
 {
     @try{
         NSArray *searchArray = @[ IOS_WIFI @"/" IP_ADDR_IPv4, IOS_CELLULAR @"/" IP_ADDR_IPv4 ];
@@ -130,43 +153,53 @@ RCT_EXPORT_METHOD(getIPV4Address:(RCTPromiseResolveBlock)resolve
         __block NSString *address;
         [searchArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop)
          {
-             address = addresses[key];
-             if(address) *stop = YES;
-         } ];
+            address = addresses[key];
+            if(address) *stop = YES;
+        } ];
         NSString *addressToReturn = address ? address : @"0.0.0.0";
-        resolve(addressToReturn);
+        return addressToReturn;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
 }
 
+- (void) getIPV4Address:(RCTPromiseResolveBlock)resolve
+               rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncIPV4Address]);
+}
+
 /**
-    Gets the device's WiFi interface IP address
-    @return device's WiFi IP if connected to WiFi, else '0.0.0.0'
-*/
-RCT_EXPORT_METHOD(getWIFIIPV4Address:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+ Gets the device's WiFi interface IP address
+ @return device's WiFi IP if connected to WiFi, else '0.0.0.0'
+ */
+- (NSString*) getSyncWIFIIPV4Address
 {
     @try{
         NSArray *searchArray = @[ IOS_WIFI @"/" IP_ADDR_IPv4 ];
         NSDictionary *addresses = [self getAllIPAddresses];
         NSLog(@"addresses: %@", addresses);
-
+        
         __block NSString *address;
         [searchArray enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop)
          {
-             address = addresses[key];
-             if(address) *stop = YES;
-         } ];
+            address = addresses[key];
+            if(address) *stop = YES;
+        } ];
         NSString *addressToReturn = address ? address : @"0.0.0.0";
-        resolve(addressToReturn);
+        return addressToReturn;
     }@catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
 }
 
-RCT_EXPORT_METHOD(getSubnet:(RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject)
+- (void) getWIFIIPV4Address:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncWIFIIPV4Address]);
+}
+
+- (NSString*) getSyncSubnet
 {
     @try {
         NSString *netmask = @"error";
@@ -198,10 +231,16 @@ RCT_EXPORT_METHOD(getSubnet:(RCTPromiseResolveBlock)resolve
         freeifaddrs(interfaces);
         
         NSString *addressToReturn = netmask ? netmask : @"0.0.0.0";
-        resolve(addressToReturn);
+        return addressToReturn;
     } @catch (NSException *exception) {
-        resolve(@"");
+        return @"";
     }
+}
+
+- (void) getSubnet:(RCTPromiseResolveBlock)resolve
+          rejecter:(RCTPromiseRejectBlock)reject
+{
+    resolve([self getSyncSubnet]);
 }
 
 - (NSDictionary *)getAllIPAddresses
@@ -246,7 +285,7 @@ RCT_EXPORT_METHOD(getSubnet:(RCTPromiseResolveBlock)resolve
 
 
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-    (const facebook::react::ObjCTurboModule::InitParams &)params
+(const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeNetworkInfoSpecJSI>(params);
 }

@@ -28,6 +28,14 @@
 
 @protocol NativeNetworkInfoSpec <RCTBridgeModule, RCTTurboModule>
 
+- (NSString *)getSyncSSID;
+- (NSString *)getSyncBSSID;
+- (NSString *)getSyncBroadcast;
+- (NSString *)getSyncIPAddress;
+- (NSString *)getSyncIPV4Address;
+- (NSString *)getSyncWIFIIPV4Address;
+- (NSString *)getSyncSubnet;
+- (NSString *)getSyncGatewayIPAddress;
 - (void)getSSID:(RCTPromiseResolveBlock)resolve
          reject:(RCTPromiseRejectBlock)reject;
 - (void)getBSSID:(RCTPromiseResolveBlock)resolve
@@ -38,6 +46,8 @@
               reject:(RCTPromiseRejectBlock)reject;
 - (void)getIPV4Address:(RCTPromiseResolveBlock)resolve
                 reject:(RCTPromiseRejectBlock)reject;
+- (void)getWIFIIPV4Address:(RCTPromiseResolveBlock)resolve
+                    reject:(RCTPromiseRejectBlock)reject;
 - (void)getSubnet:(RCTPromiseResolveBlock)resolve
            reject:(RCTPromiseRejectBlock)reject;
 - (void)getGatewayIPAddress:(RCTPromiseResolveBlock)resolve

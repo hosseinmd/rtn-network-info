@@ -48,11 +48,10 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
 
     WifiManager wifi;
 
-    public static List<String> DSLITE_LIST = Arrays.asList("192.0.0.0", "192.0.0.1", "192.0.0.2", "192.0.0.3",
-    "192.0.0.4", "192.0.0.5", "192.0.0.6", "192.0.0.7");
+    public static List<String> DSLITE_LIST = Arrays.asList("192.0.0.0", "192.0.0.1", "192.0.0.2", "192.0.0.3", "192.0.0.4", "192.0.0.5", "192.0.0.6", "192.0.0.7");
 
     @ReactMethod
-    public void getSSID(final Promise promise) {
+    public String getSyncSSID() {
         try {
             WifiInfo info = wifi.getConnectionInfo();
             // This value should be wrapped in double quotes, so we need to unwrap it.
@@ -64,30 +63,44 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
                     ssid = ssid.substring(1, ssid.length() - 1);
                 }
             }
-            promise.resolve(ssid);
+
+            return ssid;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
     @ReactMethod
-    public void getBSSID(final Promise promise) {
+    public void getSSID(Promise promise) {
+        String ssid = this.getSyncSSID();
+        promise.resolve(ssid);
+    }
+
+    @ReactMethod
+    public String getSyncBSSID() {
         try {
             WifiInfo info = wifi.getConnectionInfo();
 
             // https://stackoverflow.com/a/34848930/5732760
-            String bssid = null;
+            String bssid = "";
             if (info.getSupplicantState() == SupplicantState.COMPLETED) {
                 bssid = wifi.getConnectionInfo().getBSSID();
             }
-            promise.resolve(bssid);
+            return bssid;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
     @ReactMethod
-    public void getBroadcast(final Promise promise) {
+    public void getBSSID(Promise promise) {
+        String bssid = this.getSyncBSSID();
+
+        promise.resolve(bssid);
+    }
+
+    @ReactMethod
+    public String getSyncBroadcast() {
         try {
             String ipAddress = "";
 
@@ -99,15 +112,23 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
                     }
                 }
             }
-            promise.resolve(ipAddress);
+            return ipAddress;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
 
     }
 
     @ReactMethod
-    public void getIPAddress(final Promise promise) {
+    public void getBroadcast(Promise promise) {
+        String ipAddress = this.getSyncBroadcast();
+
+        promise.resolve(ipAddress);
+    }
+
+
+    @ReactMethod
+    public String getSyncIPAddress() {
         try {
             String ipAddress = "";
             String tmp = "0.0.0.0";
@@ -120,14 +141,23 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
                     }
                 }
             }
-            promise.resolve(ipAddress);
+            return ipAddress;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
+
     @ReactMethod
-    public void getIPV4Address(final Promise promise) {
+    public void getIPAddress(Promise promise) {
+        String ipAddress = this.getSyncIPAddress();
+
+        promise.resolve(ipAddress);
+    }
+
+
+    @ReactMethod
+    public String getSyncIPV4Address() {
         try {
             String ipAddress = "";
             String tmp = "0.0.0.0";
@@ -140,11 +170,19 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
                     }
                 }
             }
-            promise.resolve(ipAddress);
+            return ipAddress;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
+
+    @ReactMethod
+    public void getIPV4Address(Promise promise) {
+        String ipAddress = this.getSyncIPV4Address();
+
+        promise.resolve(ipAddress);
+    }
+
 
     /**
      * Gets the device's WiFi interface IP address
@@ -152,71 +190,88 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
      * @return device's WiFi IP if connected to WiFi, else '0.0.0.0'
      */
     @ReactMethod
-    public void getWIFIIPV4Address(final Promise promise) {
+    public String getSyncWIFIIPV4Address() {
         try {
             WifiInfo info = wifi.getConnectionInfo();
             int ipAddress = info.getIpAddress();
-            String stringip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff),
-            (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-            promise.resolve(stringip);
+            String stringip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+            return stringip;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
     @ReactMethod
-    public void getSubnet(final Promise promise) {
+    public void getWIFIIPV4Address(Promise promise) {
+        String stringip = this.getSyncWIFIIPV4Address();
+        promise.resolve(stringip);
+    }
+
+    @ReactMethod
+    public String getSyncSubnet() {
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 
             while (interfaces.hasMoreElements()) {
                 NetworkInterface iface = interfaces.nextElement();
-                if (iface.isLoopback() || !iface.isUp())
-                    continue;
+                if (iface.isLoopback() || !iface.isUp()) continue;
 
                 Enumeration<InetAddress> addresses = iface.getInetAddresses();
                 for (InterfaceAddress address : iface.getInterfaceAddresses()) {
 
                     InetAddress addr = addresses.nextElement();
-                    if (addr instanceof Inet6Address)
-                        continue;
+                    if (addr instanceof Inet6Address) continue;
 
-                    promise.resolve(intToIP(address.getNetworkPrefixLength()));
-                    return;
+                    return intToIP(address.getNetworkPrefixLength());
                 }
             }
+
+            return "";
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
     @ReactMethod
-    public void getGatewayIPAddress(final Promise promise) {
+    public void getSubnet(Promise promise) {
+        String subnet = this.getSyncSubnet();
+        promise.resolve(subnet);
+    }
+
+
+    @ReactMethod
+    public String getSyncGatewayIPAddress() {
         try {
             DhcpInfo dhcpInfo = wifi.getDhcpInfo();
             int gatewayIPInt = dhcpInfo.gateway;
-            String gatewayIP = String.format(
-                    "%d.%d.%d.%d",
-            ((gatewayIPInt) & 0xFF),
-            ((gatewayIPInt >> 8) & 0xFF),
-            ((gatewayIPInt >> 16) & 0xFF),
-            ((gatewayIPInt >> 24) & 0xFF)
-            );
-            promise.resolve(gatewayIP);
+            String gatewayIP = String.format("%d.%d.%d.%d", ((gatewayIPInt) & 0xFF), ((gatewayIPInt >> 8) & 0xFF), ((gatewayIPInt >> 16) & 0xFF), ((gatewayIPInt >> 24) & 0xFF));
+            return gatewayIP;
         } catch (Exception e) {
-            promise.resolve("");
+            return "";
         }
     }
 
     @ReactMethod
-    public void getFrequency(final Promise promise) {
+    public void getGatewayIPAddress(Promise promise) {
+        String gatewayIP = this.getSyncGatewayIPAddress();
+        promise.resolve(gatewayIP);
+    }
+
+    @ReactMethod
+    public double getSyncFrequency() {
         try {
             WifiInfo info = wifi.getConnectionInfo();
-            final float frequency = info.getFrequency();
-            promise.resolve(frequency);
+            double frequency = info.getFrequency();
+            return frequency;
         } catch (Exception e) {
-            promise.resolve("");
+            return null;
         }
+    }
+
+    @ReactMethod
+    public void getFrequency(Promise promise) {
+        double frequency = this.getSyncFrequency();
+        promise.resolve(frequency);
     }
 
     private String intToIP(int ip) {
@@ -224,18 +279,17 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
         int k = 1;
 
         for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 8; j++) {
-        if (k <= ip) {
-            finl[i] += "1";
-        } else {
-            finl[i] += "0";
-        }
-        k++;
+            for (int j = 0; j < 8; j++) {
+                if (k <= ip) {
+                    finl[i] += "1";
+                } else {
+                    finl[i] += "0";
+                }
+                k++;
 
-    }
-    }
-        return Integer.parseInt(finl[0], 2) + "." + Integer.parseInt(finl[1], 2) + "." + Integer.parseInt(finl[2], 2)
-        + "." + Integer.parseInt(finl[3], 2);
+            }
+        }
+        return Integer.parseInt(finl[0], 2) + "." + Integer.parseInt(finl[1], 2) + "." + Integer.parseInt(finl[2], 2) + "." + Integer.parseInt(finl[3], 2);
     }
 
     private Boolean inDSLITERange(String ip) {
@@ -253,8 +307,8 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
                 NetworkInterface intf = en.nextElement();
 
                 for (InterfaceAddress interface_address : intf.getInterfaceAddresses()) {
-                addresses.add(interface_address);
-            }
+                    addresses.add(interface_address);
+                }
             }
         } catch (Exception ex) {
             Log.e(NAME, ex.toString());
