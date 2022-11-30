@@ -23,11 +23,32 @@
 #define IP_ADDR_IPv6    @"ipv6"
 
 #import <SystemConfiguration/CaptiveNetwork.h>
-
+#import <SystemConfiguration/SCNetworkReachability.h>
 
 @implementation RTNNetworkInfo
 
 RCT_EXPORT_MODULE();
+
+- (void) getIsInternetAvailable:(RCTPromiseResolveBlock)resolve
+           reject:(RCTPromiseRejectBlock)reject
+{
+    try {
+        SCNetworkReachabilityFlags flags;
+        SCNetworkReachabilityRef address;
+        
+        address = SCNetworkReachabilityCreateWithName(NULL, "www.google.com");
+        Boolean success = SCNetworkReachabilityGetFlags(address, &flags);
+        CFRelease(address);
+        
+        bool canReach = success
+        && !(flags & kSCNetworkReachabilityFlagsConnectionRequired)
+        && (flags & kSCNetworkReachabilityFlagsReachable);
+        
+        resolve(canReach ? @true : @false);
+    } catch (NSException *exception) {
+        resolve(@false);
+    }
+}
 
 #if TARGET_OS_IOS
 - (NSString*) getSyncSSID
@@ -41,7 +62,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getSSID:(RCTPromiseResolveBlock)resolve
-        rejecter:(RCTPromiseRejectBlock)reject
+           reject:(RCTPromiseRejectBlock)reject
 {
     resolve([self getSyncSSID]);
 }
@@ -58,8 +79,8 @@ RCT_EXPORT_MODULE();
     }
 }
 
-- (void) getBSSID:(RCTPromiseResolveBlock)resolve
-         rejecter:(RCTPromiseRejectBlock)reject
+- (void)getBSSID:(RCTPromiseResolveBlock)resolve
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncBSSID]);
 }
@@ -106,7 +127,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getBroadcast:(RCTPromiseResolveBlock)resolve
-             rejecter:(RCTPromiseRejectBlock)reject
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncBroadcast]);
 }
@@ -122,7 +143,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getIPAddress:(RCTPromiseResolveBlock)resolve
-             rejecter:(RCTPromiseRejectBlock)reject
+            reject:(RCTPromiseRejectBlock)reject
 {
     resolve([self getSyncIPAddress]);
 }
@@ -138,7 +159,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getGatewayIPAddress:(RCTPromiseResolveBlock)resolve
-                    rejecter:(RCTPromiseRejectBlock)reject
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncGatewayIPAddress]);
 }
@@ -163,8 +184,8 @@ RCT_EXPORT_MODULE();
     }
 }
 
-- (void) getIPV4Address:(RCTPromiseResolveBlock)resolve
-               rejecter:(RCTPromiseRejectBlock)reject
+- (void)getIPV4Address:(RCTPromiseResolveBlock)resolve
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncIPV4Address]);
 }
@@ -194,7 +215,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getWIFIIPV4Address:(RCTPromiseResolveBlock)resolve
-                   rejecter:(RCTPromiseRejectBlock)reject
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncWIFIIPV4Address]);
 }
@@ -238,7 +259,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void) getSubnet:(RCTPromiseResolveBlock)resolve
-          rejecter:(RCTPromiseRejectBlock)reject
+            reject:(RCTPromiseRejectBlock)reject;
 {
     resolve([self getSyncSubnet]);
 }

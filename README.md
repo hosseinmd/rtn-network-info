@@ -125,3 +125,12 @@ NetworkInfo.getFrequency().then((frequency) => {
 // Sync
 const frequency = NetworkInfo.getSyncFrequency();
 ```
+
+### Get is internet available
+
+```js
+// Async
+NetworkInfo.getIsInternetAvailable().then((isInternetAvailable) => {
+  console.log(isInternetAvailable);
+});
+```

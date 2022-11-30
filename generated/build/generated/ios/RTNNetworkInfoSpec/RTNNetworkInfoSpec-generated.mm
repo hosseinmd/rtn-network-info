@@ -49,6 +49,14 @@ namespace facebook {
       return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, StringKind, "getSyncGatewayIPAddress", @selector(getSyncGatewayIPAddress), args, count);
     }
 
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSyncFrequency(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, NumberKind, "getSyncFrequency", @selector(getSyncFrequency), args, count);
+    }
+
+    static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getIsInternetAvailable(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
+      return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getIsInternetAvailable", @selector(getIsInternetAvailable:reject:), args, count);
+    }
+
     static facebook::jsi::Value __hostFunction_NativeNetworkInfoSpecJSI_getSSID(facebook::jsi::Runtime& rt, TurboModule &turboModule, const facebook::jsi::Value* args, size_t count) {
       return static_cast<ObjCTurboModule&>(turboModule).invokeObjCMethod(rt, PromiseKind, "getSSID", @selector(getSSID:reject:), args, count);
     }
@@ -110,6 +118,12 @@ namespace facebook {
         
         
         methodMap_["getSyncGatewayIPAddress"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncGatewayIPAddress};
+        
+        
+        methodMap_["getSyncFrequency"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSyncFrequency};
+        
+        
+        methodMap_["getIsInternetAvailable"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getIsInternetAvailable};
         
         
         methodMap_["getSSID"] = MethodMetadata {0, __hostFunction_NativeNetworkInfoSpecJSI_getSSID};

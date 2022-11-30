@@ -36,6 +36,9 @@
 - (NSString *)getSyncWIFIIPV4Address;
 - (NSString *)getSyncSubnet;
 - (NSString *)getSyncGatewayIPAddress;
+- (NSNumber *)getSyncFrequency;
+- (void)getIsInternetAvailable:(RCTPromiseResolveBlock)resolve
+                        reject:(RCTPromiseRejectBlock)reject;
 - (void)getSSID:(RCTPromiseResolveBlock)resolve
          reject:(RCTPromiseRejectBlock)reject;
 - (void)getBSSID:(RCTPromiseResolveBlock)resolve
