@@ -6,7 +6,8 @@
   "source": "js/index",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prepare": "tsc"
+    "prepare": "tsc",
+    "ios:sync": "cd sample && yarn add ../ && node ./node_modules/react-native/scripts/generate-artifacts.js --path ./ --outputPath ../generated/ && yarn add ../ && cd ios && RCT_NEW_ARCH_ENABLED=1 arch -x86_64 pod install"
   },
   "files": [
     "js",
@@ -15,6 +16,7 @@
     "ios",
     "rtn-network-info.podspec",
     "!android/build",
+    "!sample",
     "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
