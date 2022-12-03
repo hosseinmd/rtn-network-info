@@ -1,6 +1,6 @@
 {
   "name": "rtn-network-info",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React Native Network info",
   "react-native": "lib/index.js",
   "source": "js/index",
