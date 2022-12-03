@@ -43,6 +43,10 @@ export function getSyncFrequency() {
   }
 }
 
+export async function getIsNetworkAvailable() {
+  return await RNNetworkInfo?.getIsNetworkAvailable();
+}
+
 export async function getSSID() {
   return await RNNetworkInfo?.getSSID();
 }
@@ -95,6 +99,7 @@ const NetworkInfo = {
   getSyncSubnet,
   getSyncGatewayIPAddress,
   getSyncFrequency,
+  getIsNetworkAvailable,
   getSSID,
   getBSSID,
   getBroadcast,

@@ -17,7 +17,7 @@ export interface Spec extends TurboModule {
 
   //Async
 
-  getIsInternetAvailable(): Promise<boolean>;
+  getIsNetworkAvailable(): Promise<boolean>;
   getSSID(): Promise<string>;
   getBSSID(): Promise<string>;
   getBroadcast(): Promise<string>;

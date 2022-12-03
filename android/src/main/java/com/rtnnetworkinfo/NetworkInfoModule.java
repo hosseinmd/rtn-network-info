@@ -3,6 +3,7 @@ package com.rtnnetworkinfo;
 import androidx.annotation.NonNull;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -10,13 +11,9 @@ import android.net.wifi.SupplicantState;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.rtnnetworkinfo.types.ConnectionType;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -27,17 +24,15 @@ import java.util.Enumeration;
 import java.util.Arrays;
 import java.util.List;
 import java.net.Inet6Address;
-import java.util.Map;
-import java.util.HashMap;
 
 public class NetworkInfoModule extends NativeNetworkInfoSpec {
 
     public static String NAME = "RTNNetworkInfo";
+    private ReactApplicationContext context;
 
-    NetworkInfoModule(ReactApplicationContext context) {
-        super(context);
-
-        wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    NetworkInfoModule(ReactApplicationContext _context) {
+        super(_context);
+        context = _context;
     }
 
     @Override
@@ -49,6 +44,13 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
     WifiManager wifi;
 
     public static List<String> DSLITE_LIST = Arrays.asList("192.0.0.0", "192.0.0.1", "192.0.0.2", "192.0.0.3", "192.0.0.4", "192.0.0.5", "192.0.0.6", "192.0.0.7");
+
+
+    private boolean getIsNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 
     @ReactMethod
     public String getSyncSSID() {
@@ -264,7 +266,7 @@ public class NetworkInfoModule extends NativeNetworkInfoSpec {
             double frequency = info.getFrequency();
             return frequency;
         } catch (Exception e) {
-            return null;
+            return 0;
         }
     }
 

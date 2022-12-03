@@ -130,7 +130,7 @@ const frequency = NetworkInfo.getSyncFrequency();
 
 ```js
 // Async
-NetworkInfo.getIsInternetAvailable().then((isInternetAvailable) => {
-  console.log(isInternetAvailable);
+NetworkInfo.getIsNetworkAvailable().then((isNetworkAvailable) => {
+  console.log(isNetworkAvailable);
 });
 ```

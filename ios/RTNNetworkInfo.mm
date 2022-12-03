@@ -24,27 +24,19 @@
 
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
+#import "Reachability.h"
 
 @implementation RTNNetworkInfo
 
 RCT_EXPORT_MODULE();
 
-- (void) getIsInternetAvailable:(RCTPromiseResolveBlock)resolve
+- (void) getIsNetworkAvailable:(RCTPromiseResolveBlock)resolve
            reject:(RCTPromiseRejectBlock)reject
 {
     try {
-        SCNetworkReachabilityFlags flags;
-        SCNetworkReachabilityRef address;
-        
-        address = SCNetworkReachabilityCreateWithName(NULL, "www.google.com");
-        Boolean success = SCNetworkReachabilityGetFlags(address, &flags);
-        CFRelease(address);
-        
-        bool canReach = success
-        && !(flags & kSCNetworkReachabilityFlagsConnectionRequired)
-        && (flags & kSCNetworkReachabilityFlagsReachable);
-        
-        resolve(canReach ? @true : @false);
+        Reachability *reachability = [Reachability reachabilityForInternetConnection];
+        NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+        resolve(networkStatus != NotReachable? @true : @false);
     } catch (NSException *exception) {
         resolve(@false);
     }
